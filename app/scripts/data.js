@@ -27,6 +27,7 @@ journey.data = (function() {
             var artistName = track.artist['#text'];
             if(!counts.hasOwnProperty(artistName)) {
                 counts[artistName] = {};
+                counts[artistName]['total'] = 0;
             }
             // a new track might not have date field
             if(track.date) {
@@ -40,6 +41,7 @@ journey.data = (function() {
                 else {
                     counts[artistName][dateString] += 1;
                 }
+                counts[artistName]['total'] += 1;
             }
         });
 
@@ -53,15 +55,21 @@ journey.data = (function() {
         for(var artistName in counts) {
             if(counts.hasOwnProperty(artistName)) {
                 var artist = counts[artistName];
-                for (var date in artist) {
-                    if(artist.hasOwnProperty(date)) {
-                        normalized.push({
-                            'artist': artistName,
-                            'date': date,
-                            'count': artist[date]
-                        });
+
+                if(artist.total > 1) {
+                    for (var date in artist) {
+                        if(artist.hasOwnProperty(date)) {
+                            if(date !== 'total') {
+                                normalized.push({
+                                    'artist': artistName,
+                                    'date': date,
+                                    'count': artist[date]
+                                });
+                            }
+                        }
                     }
                 }
+                
             }
         }
 
