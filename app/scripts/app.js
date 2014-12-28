@@ -8,7 +8,8 @@ journey.lastfm.getLastfmTracks('thmmrs2298', new Date(2014, 6, 1), new Date(2014
     console.log(normalizedCounts);
 
     var visWidth = $(window).width();
-    journey.vis.trackBubbles(normalizedCounts, visWidth);
+    journey.vis.lineDetails(normalizedCounts, visWidth);
+    // journey.vis.trendBubbles(normalizedCounts, visWidth);
 });
 
 
