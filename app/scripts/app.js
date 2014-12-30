@@ -1,16 +1,28 @@
 // starting point of the app
 
+$('.start-done').click(function() {
+    $('.start').hide();
+    $('.preloader').show();
 
-journey.lastfm.getLastfmTracks('thmmrs2298', new Date(2014, 6, 1), new Date(2014, 9, 1), function(data) {
-    var dailyCounts = journey.data.computeDailyCounts(data);
-    console.log(dailyCounts);
-    var normalizedCounts = journey.data.normalizeDailyCounts(dailyCounts);
-    console.log(normalizedCounts);
+    var username = $('.start-lastfm').val();
+    var start = new Date($('.start-startdate').val());
+    var end = new Date($('.start-enddate').val());
+    
+    journey.lastfm.getLastfmTracks(username, start, end, function(data) {
 
-    var visWidth = $(window).width();
-    journey.vis.lineDetails(normalizedCounts, visWidth);
-    // journey.vis.trendBubbles(normalizedCounts, visWidth);
+        var dailyCounts = journey.data.computeDailyCounts(data);
+        console.log(dailyCounts);
+        var normalizedCounts = journey.data.normalizeDailyCounts(dailyCounts);
+        console.log(normalizedCounts);
+
+        $('.preloader').hide();
+
+        var visWidth = $(window).width();
+        // journey.vis.lineDetails(normalizedCounts, visWidth);
+        journey.vis.trendBubbles(normalizedCounts, visWidth);
+    });
 });
+
 
 
 // journey.data.getLastfmArtistTracks('thmmrs2298', 'Kate Bush', function(data) {
