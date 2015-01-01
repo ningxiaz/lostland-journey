@@ -53,6 +53,14 @@ journey.vis = (function() {
             .style('stroke-width', '1px')
             .attr('d', line);
 
+        // svg.selectAll('.label')
+        //     .data(counts)
+        //     .enter()
+        //     .append('svg:title')
+        //     .attr('x', function(d) {return x(d.date)})
+        //     .attr('y', function(d) {return y(0.5) - r(d.count)})
+        //     .text(function(d) {return d.artist});
+
         svg.selectAll('.bubble')
                 .data(counts)
             .enter().append('circle')
@@ -129,13 +137,6 @@ journey.vis = (function() {
             .style('stroke', '#555')
             .style('stroke-width', '1px')
             .attr('d', line);
-
-        // svg.append('path')
-        //     .data(counts)
-        //     .attr('class', 'line')
-        //     .attr('d', line)
-        //     .style('stroke', function(d) {return color(d.artist)})
-        //     .style('stroke-width', '1px');
 
         svg.selectAll('.bubble')
                 .data(counts)

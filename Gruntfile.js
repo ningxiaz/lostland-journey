@@ -155,22 +155,14 @@ module.exports = function (grunt) {
         loadPath: 'bower_components'
       },
       dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.app %>/styles',
-          src: ['*.{scss,sass}'],
-          dest: '.tmp/styles',
-          ext: '.css'
-        }]
+        files: {
+          '.tmp/styles/main.css': '<%= config.app %>/styles/main.scss' // just compile one main file
+        }
       },
       server: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.app %>/styles',
-          src: ['*.{scss,sass}'],
-          dest: '.tmp/styles',
-          ext: '.css'
-        }]
+        files: {
+          '.tmp/styles/main.css': '<%= config.app %>/styles/main.scss' // just compile one main file
+        }
       }
     },
 
