@@ -56,20 +56,17 @@ journey.data = (function() {
             if(counts.hasOwnProperty(artistName)) {
                 var artist = counts[artistName];
 
-                if(artist.total > 1) {
-                    for (var date in artist) {
-                        if(artist.hasOwnProperty(date)) {
-                            if(date !== 'total') {
-                                normalized.push({
-                                    'artist': artistName,
-                                    'date': date,
-                                    'count': artist[date]
-                                });
-                            }
+                for (var date in artist) {
+                    if(artist.hasOwnProperty(date)) {
+                        if(date !== 'total') {
+                            normalized.push({
+                                'artist': artistName,
+                                'date': date,
+                                'count': artist[date]
+                            });
                         }
                     }
-                }
-                
+                }                
             }
         }
 

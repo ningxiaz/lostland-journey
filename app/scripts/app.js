@@ -9,9 +9,9 @@ $('.start-done').click(function() {
     var end = new Date($('.start-enddate').val());
     
     journey.lastfm.getLastfmTracks(username, start, end, function(data) {
-
         var dailyCounts = journey.data.computeDailyCounts(data);
         console.log(dailyCounts);
+
         var normalizedCounts = journey.data.normalizeDailyCounts(dailyCounts);
         console.log(normalizedCounts);
 
