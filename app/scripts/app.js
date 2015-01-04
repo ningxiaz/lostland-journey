@@ -9,17 +9,17 @@ $('.start-done').click(function() {
     var end = new Date($('.start-enddate').val());
     
     journey.lastfm.getLastfmTracks(username, start, end, function(data) {
-        var dailyCounts = journey.data.computeDailyCounts(data);
+        var dailyCounts = journey.data.computeDateArtistCounts(data);
         console.log(dailyCounts);
 
-        var normalizedCounts = journey.data.normalizeDailyCounts(dailyCounts);
+        var normalizedCounts = journey.data.normalizeAndSort(dailyCounts);
         console.log(normalizedCounts);
 
         $('.preloader').hide();
 
         var visWidth = $(window).width();
         // journey.vis.lineDetails(normalizedCounts, visWidth);
-        journey.vis.trendBubbles(normalizedCounts, visWidth);
+        journey.vis.dailyBubbles(normalizedCounts, visWidth);
     });
 });
 

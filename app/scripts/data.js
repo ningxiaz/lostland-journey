@@ -21,6 +21,28 @@ journey.data = (function() {
         return counts;
     };
 
+    var computeDateArtistCounts = function(tracks) {
+        var counts = {};
+        tracks.forEach(function(track) {
+            var artistName = track.artist['#text'];
+            if(track.date) {
+                var dateObj = new Date(parseInt(track.date.uts) * 1000);
+                var dateString = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+
+                if(!counts.hasOwnProperty(dateString)) {
+                    counts[dateString] = {};
+                }
+
+                if(!counts[dateString].hasOwnProperty(artistName)) {
+                    counts[dateString][artistName] = 0;
+                }
+                counts[dateString][artistName] += 1;
+            }
+        });
+
+        return counts;
+    };
+
     var computeDailyCounts = function(tracks) {
         var counts = {};
         tracks.forEach(function(track) {
@@ -46,6 +68,45 @@ journey.data = (function() {
         });
 
         return counts;
+    };
+
+    // normalize nested counts for D3 to use
+    // artist sorted by count for each day
+    var normalizeAndSort = function(counts) {
+        var normalized = [];
+
+        for(var date in counts) {
+            if(counts.hasOwnProperty(date)) {
+                var artists = [];
+
+                for(artistName in counts[date]) {
+                    if(counts[date].hasOwnProperty(artistName)) {
+                        artists.push({
+                            'artist': artistName,
+                            'date': date,
+                            'count': counts[date][artistName]
+                        });
+                    }
+                }
+
+                artists.sort(function(a, b) {
+                    if(a.count > b.count) {
+                        return -1;
+                    }
+                    if(a.count < b.count) {
+                        return 1;
+                    }
+                    return 0;
+                });
+
+                normalized.push({
+                    date: date,
+                    artists: artists
+                });
+            }
+        }
+
+        return normalized;
     };
 
     // normalize counts for D3 to use
@@ -74,6 +135,8 @@ journey.data = (function() {
     };
 
     return {
+        computeDateArtistCounts: computeDateArtistCounts,
+        normalizeAndSort: normalizeAndSort,
         computeArtistDailyCounts: computeArtistDailyCounts,
         computeDailyCounts: computeDailyCounts,
         normalizeDailyCounts: normalizeDailyCounts

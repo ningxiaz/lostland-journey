@@ -2,6 +2,103 @@
 // responsible for all the data visualization part
 
 journey.vis = (function() {
+    var dailyBubbles = function(counts, visWidth) {
+        var timeParse = d3.time.format('%Y-%m-%d').parse;
+
+        var linesData = [];
+
+        counts.forEach(function(d) {
+            d.date = timeParse(d.date);
+        });
+
+        var maxR = 40;
+        var margin = {top: maxR/2, left: maxR, right: maxR, bottom: maxR};
+        var width = visWidth - margin.left - margin.right;
+        var height = 400 - margin.top - margin.bottom;
+
+        var color =  d3.scale.category20();
+
+        var x = d3.time.scale().range([margin.left, margin.left + width]);
+        var y = d3.scale.linear().range([height, 0]);
+        var r = d3.scale.linear().range([3, maxR]);
+
+        var svg = d3.select('.musicVis').append('svg')
+                    .attr('width', visWidth)
+                    .attr('height', 400 + margin.top + margin.bottom)
+                .append('g');
+
+        var maxArtsitsLength = d3.max(counts, function(d) { return d.artists.length });
+        var verticalRange = Math.ceil(maxArtsitsLength / 2);
+
+        x.domain(d3.extent(counts, function(d) { return d.date; }));
+        y.domain([ 0 - verticalRange, verticalRange]);
+        console.log('verticalRange: ' + verticalRange);
+        var minCount = d3.min(counts, function(d) {return d3.min(d.artists, function(d) { return d.count })});
+        var maxCount = d3.max(counts, function(d) {return d3.max(d.artists, function(d) { return d.count })});
+        r.domain([minCount, maxCount]);
+        console.log('minCount: ' + minCount + ' , maxCount: ' + maxCount);
+
+        // method to draw horizontal lines
+        var line = d3.svg.line()
+                    .x(function(d, i) {return (i*width + margin.left)})
+                    .y(function(d) {
+                        return y(d);
+                    })
+                    .interpolate("linear");
+
+        var lineData = [[0, 0]];
+
+        svg.selectAll('.line')
+            .data(lineData)
+            .enter()
+            .append('svg:g')
+            .append('path')
+            .attr('class', 'line')
+            .style('stroke', '#555')
+            .style('stroke-width', '1px')
+            .attr('d', line);
+
+        var bubbles = svg.selectAll('.date')
+                .data(counts)
+            .enter().append('svg:g')
+            .selectAll('.bubble')
+                .data(function(d) {return d.artists})
+            .enter().append('circle')
+                .attr('class', function(d) {
+                    var artistName = d.artist.toLowerCase().split(' ').join('-');
+                    return 'bubble ' + artistName;
+                })
+                .attr('r', function(d) {
+                    return r(d.count)
+                })
+                .attr('cx', function(d) {return x(timeParse(d.date))})
+                .attr('cy', function(d, i) {
+                    if((i % 2) === 0) {
+                        return y(Math.ceil(i / 2));
+                    }
+
+                    return y(0 - Math.ceil(i / 2));
+                })
+                .style('fill', function(d) {return color(d.artist)})
+                .style('opacity', 0.7)
+                .on('mouseover', function(d) {
+                    var artistName = d.artist;
+                    console.log('inspecting... ' + artistName);
+
+                    d3.selectAll('.bubble')
+                        .filter(function(d) {
+                            return d.artist !== artistName;
+                        })
+                        .transition()
+                        .style('fill', '#444');
+                })
+                .on('mouseout', function() {
+                    d3.selectAll('.bubble')
+                        .transition()
+                        .style('fill', function(d) {return color(d.artist)});
+                });
+    };
+
     var trendBubbles = function(counts, visWidth) {
         var timeParse = d3.time.format('%Y-%m-%d').parse;
 
@@ -157,6 +254,7 @@ journey.vis = (function() {
     };
 
     return {
+        dailyBubbles: dailyBubbles,
         trendBubbles: trendBubbles,
         lineDetails: lineDetails
     };
