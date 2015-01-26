@@ -5,10 +5,21 @@ $('.start-done').click(function() {
     $('.preloader').show();
 
     var username = $('.start-lastfm').val();
-    var start = new Date($('.start-startdate').val());
-    var end = new Date($('.start-enddate').val());
+
+    var now = new Date();
+    var oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(now.getMonth() - 1);
+
+    var registeredTime;
+
+    journey.lastfm.getLastfmUserInfo(username, function(data) {
+        registeredTime = new Date(parseInt(data.user.registered.unixtime) * 1000);        
+
+        var visWidth = $(window).width();
+        journey.timeline.draw(registeredTime, now, visWidth);
+    });
     
-    journey.lastfm.getLastfmTracks(username, start, end, function(data) {
+    journey.lastfm.getLastfmTracks(username, oneMonthAgo, now, function(data) {
         var dailyCounts = journey.data.computeDateArtistCounts(data);
         console.log(dailyCounts);
 
@@ -18,14 +29,6 @@ $('.start-done').click(function() {
         $('.preloader').hide();
 
         var visWidth = $(window).width();
-        // journey.vis.lineDetails(normalizedCounts, visWidth);
         journey.vis.dailyBubbles(normalizedCounts, visWidth);
     });
 });
-
-
-
-// journey.data.getLastfmArtistTracks('thmmrs2298', 'Kate Bush', function(data) {
-//     var counts = journey.data.computeArtistDailyCounts(data.artisttracks.track);
-//     console.log(counts);
-// });

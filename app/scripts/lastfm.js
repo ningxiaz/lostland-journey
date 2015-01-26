@@ -6,6 +6,7 @@ journey.lastfm = (function() {
     var lastfmKey = 'bd286e68d3aa369779ff55dfe15470b6';
 
     // from, to are both Date objects
+    // now it's recursive, when migrated to Angular, should use promise chains
     var getLastfmTracks = function(username, from, to, callback) {
         console.log('getting ' + username + '\'s tracks!');
 
@@ -68,11 +69,29 @@ journey.lastfm = (function() {
         });
     };
 
-    
+    var getLastfmUserInfo = function(username, callback) {
+        console.log('getting ' + username + '\'s info!');
+
+        $.ajax({
+            url: lastfmBase + '?method=user.getInfo&user=' + username + '&api_key=' + lastfmKey + '&format=json',
+            success: function(data) {
+                if (data.error) {
+                    console.log('ERROR [data.getLastfmUserInfo]:' + data.message);
+                }
+                else {
+                    console.log(data);
+                    if(callback) {
+                        callback(data);
+                    }
+                }
+            }
+        });
+    };
 
     return {
         getLastfmTracks: getLastfmTracks,
-        getLastfmArtistTracks: getLastfmArtistTracks
+        getLastfmArtistTracks: getLastfmArtistTracks,
+        getLastfmUserInfo: getLastfmUserInfo
     };
 })();
 
