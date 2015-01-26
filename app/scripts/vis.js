@@ -18,29 +18,66 @@ journey.vis = (function() {
 
         var color =  d3.scale.category20();
 
-        var x = d3.time.scale().range([margin.left, margin.left + width]);
+        var x = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
-        var r = d3.scale.linear().range([3, maxR]);
+        var r = d3.scale.linear().range([0, maxR]);
 
         var svg = d3.select('.musicVis').append('svg')
                     .attr('width', visWidth)
-                    .attr('height', 400 + margin.top + margin.bottom)
-                .append('g');
-
-        var maxArtsitsLength = d3.max(counts, function(d) { return d.artists.length });
-        var verticalRange = Math.ceil(maxArtsitsLength / 2);
+                    .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         x.domain(d3.extent(counts, function(d) { return d.date; }));
-        y.domain([ 0 - verticalRange, verticalRange]);
-        console.log('verticalRange: ' + verticalRange);
-        var minCount = d3.min(counts, function(d) {return d3.min(d.artists, function(d) { return d.count })});
+        // var minCount = d3.min(counts, function(d) {return d3.min(d.artists, function(d) { return d.count })});
         var maxCount = d3.max(counts, function(d) {return d3.max(d.artists, function(d) { return d.count })});
-        r.domain([minCount, maxCount]);
-        console.log('minCount: ' + minCount + ' , maxCount: ' + maxCount);
+        r.domain([0, maxCount]);
+        console.log('maxCount: ' + maxCount);
+
+        function computeOverlap(prevCount, currCount) {
+            // if the smaller circle is too small, separate them
+            if(currCount < maxCount*0.4) {
+                return 3;
+            }
+            // if they're both kinda big, given them a bit overlap
+            return - currCount*0.4;
+        }
+
+        // offsets are on the same scale as r
+        counts.forEach(function(date) {
+            var artistsList = date.artists;
+            artistsList.forEach(function(artist, i) {
+                if(i === 0) {
+                    artist.offset = 0;
+                    return;
+                }
+
+                var prevCount = 0;
+                var prevOffset = 0;
+                var overlap = 0;
+                // for even elements
+                if(i % 2 === 0) {
+                    prevCount = artistsList[i - 2].count;
+                    prevOffset = artistsList[i - 2].offset;
+                    overlap = computeOverlap(prevCount, artist.count);
+                    artist.offset = prevOffset + r(prevCount + overlap + artist.count);
+                    return;
+                }
+                // for odd elements
+                prevCount = (i === 1) ? artistsList[0].count : artistsList[i - 2].count;
+                prevOffset = (i === 1) ? artistsList[0].offset : artistsList[i - 2].offset;
+                overlap = computeOverlap(prevCount, artist.count);
+                artist.offset = - ((- prevOffset) + r(prevCount + overlap + artist.count));
+                return;
+            });
+        });
+
+        y.domain([-1, 1]);
+        
 
         // method to draw horizontal lines
         var line = d3.svg.line()
-                    .x(function(d, i) {return (i*width + margin.left)})
+                    .x(function(d, i) {return (i*width)})
                     .y(function(d) {
                         return y(d);
                     })
@@ -64,20 +101,14 @@ journey.vis = (function() {
             .selectAll('.bubble')
                 .data(function(d) {return d.artists})
             .enter().append('circle')
-                .attr('class', function(d) {
-                    var artistName = d.artist.toLowerCase().split(' ').join('-');
-                    return 'bubble ' + artistName;
-                })
+                .attr('class', 'bubble')
                 .attr('r', function(d) {
                     return r(d.count)
                 })
                 .attr('cx', function(d) {return x(timeParse(d.date))})
-                .attr('cy', function(d, i) {
-                    if((i % 2) === 0) {
-                        return y(Math.ceil(i / 2));
-                    }
-
-                    return y(0 - Math.ceil(i / 2));
+                .attr('cy', function(d) {
+                    // from the middle, it's not guaranteed this will be within our svg area
+                    return 0.5*height + d.offset;
                 })
                 .style('fill', function(d) {return color(d.artist)})
                 .style('opacity', 0.7)

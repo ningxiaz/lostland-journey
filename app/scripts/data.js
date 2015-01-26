@@ -109,6 +109,38 @@ journey.data = (function() {
         return normalized;
     };
 
+    var computeOffsets = function(artists) {
+        artists.forEach(function(artist, i) {
+            if(i === 0) {
+                artist.offset = 0;
+                return;
+            }
+
+            var prevCount = 0;
+            var prevOffset = 0;
+            var overlap = 0;
+            // for even elements
+            if(i % 2 === 0) {
+                prevCount = artists[i - 2].count;
+                prevOffset = artists[i - 2].offset;
+                overlap = computeOverlap(prevCount, artist.count);
+                artist.offset = prevOffset + prevCount + overlap + artist.count;
+                return;
+            }
+            prevCount = (i === 1) ? artists[0].count : artists[i - 2].count;
+            prevOffset = (i === 1) ? artists[0].offset : artists[i - 2].offset;
+            overlap = computeOverlap(prevCount, artist.count);
+            artist.offset = - ((- prevOffset) + prevCount + overlap + artist.count);
+            return;
+        });
+
+        return;
+    };
+
+    var computeOverlap = function(prevCount, currCount) {
+        return 0;
+    };
+
     // normalize counts for D3 to use
     var normalizeDailyCounts = function(counts) {
         var normalized = [];
