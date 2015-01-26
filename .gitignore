@@ -4,4 +4,4 @@ dist
 .tmp
 .sass-cache
 bower_components
-data/data.json
+data/*.json
