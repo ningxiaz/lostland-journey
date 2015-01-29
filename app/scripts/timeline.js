@@ -4,7 +4,7 @@
 journey.timeline = (function() {
 
     // start, end are Date objects
-    var draw = function(start, end, visWidth) {
+    var draw = function(start, end, visWidth, extentLeft, extentRight) {
         console.log(start);
         console.log(end);
 
@@ -40,6 +40,9 @@ journey.timeline = (function() {
                     .x(x)
                     .on('brushend', brushed);
 
+        // set the current extent
+        brush.extent([extentLeft, extentRight]);
+
         svg.selectAll('.timeline')
             .data([data])   // single svg element
             .enter()
@@ -62,6 +65,8 @@ journey.timeline = (function() {
 
         function brushed() {
             console.log(brush.extent());
+            var selectedExtent = brush.extent();
+            journey.vis.updateDailyBubbles(selectedExtent[0], selectedExtent[1]);
         }
     };
 

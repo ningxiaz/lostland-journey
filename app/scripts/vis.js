@@ -130,6 +130,23 @@ journey.vis = (function() {
                 });
     };
 
+    var updateDailyBubbles = function(start, end) {
+        $('.preloader').show();
+        journey.lastfm.getLastfmTracks(journey.username, start, end, function(data) {
+            var dailyCounts = journey.data.computeDateArtistCounts(data);
+
+            var normalizedCounts = journey.data.normalizeAndSort(dailyCounts);
+            console.log('normalizedCounts');
+            console.log(normalizedCounts);
+
+            $('.preloader').hide();
+
+            var visWidth = $(window).width();
+            console.log('about to update!');
+            // journey.vis.dailyBubbles(normalizedCounts, visWidth);
+        });
+    };
+
     var trendBubbles = function(counts, visWidth) {
         var timeParse = d3.time.format('%Y-%m-%d').parse;
 
@@ -287,6 +304,7 @@ journey.vis = (function() {
     return {
         dailyBubbles: dailyBubbles,
         trendBubbles: trendBubbles,
+        updateDailyBubbles: updateDailyBubbles,
         lineDetails: lineDetails
     };
 })();
