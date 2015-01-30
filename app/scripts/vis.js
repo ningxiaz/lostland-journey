@@ -2,6 +2,8 @@
 // responsible for all the data visualization part
 
 journey.vis = (function() {
+    var svg;
+
     var dailyBubbles = function(counts, visWidth) {
         var timeParse = d3.time.format('%Y-%m-%d').parse;
 
@@ -22,7 +24,7 @@ journey.vis = (function() {
         var y = d3.scale.linear().range([height, 0]);
         var r = d3.scale.linear().range([0, maxR]);
 
-        var svg = d3.select('.musicVis').append('svg')
+        svg = d3.select('.musicVis').append('svg')
                     .attr('width', visWidth)
                     .attr('height', height + margin.top + margin.bottom)
                 .append('g')
@@ -131,7 +133,7 @@ journey.vis = (function() {
     };
 
     var updateDailyBubbles = function(start, end) {
-        $('.preloader').show();
+        $('.overlay').show();
         journey.lastfm.getLastfmTracks(journey.username, start, end, function(data) {
             var dailyCounts = journey.data.computeDateArtistCounts(data);
 
@@ -139,11 +141,12 @@ journey.vis = (function() {
             console.log('normalizedCounts');
             console.log(normalizedCounts);
 
-            $('.preloader').hide();
+            $('.overlay').hide();
 
             var visWidth = $(window).width();
             console.log('about to update!');
-            // journey.vis.dailyBubbles(normalizedCounts, visWidth);
+            $('.musicVis').empty();
+            journey.vis.dailyBubbles(normalizedCounts, visWidth);
         });
     };
 

@@ -2,7 +2,7 @@
 
 $('.start-done').click(function() {
     $('.start').hide();
-    $('.preloader').show();
+    $('.overlay').show();
 
     journey.username = $('.start-lastfm').val();
 
@@ -26,7 +26,7 @@ $('.start-done').click(function() {
         var normalizedCounts = journey.data.normalizeAndSort(dailyCounts);
         console.log(normalizedCounts);
 
-        $('.preloader').hide();
+        $('.overlay').hide();
 
         var visWidth = $(window).width();
         journey.vis.dailyBubbles(normalizedCounts, visWidth);
