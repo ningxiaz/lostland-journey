@@ -20,6 +20,7 @@ $('.start-done').click(function() {
     });
     
     journey.lastfm.getLastfmTracks(journey.username, oneMonthAgo, now, function(data) {
+        console.log('here!');
         var dailyCounts = journey.data.computeDateArtistCounts(data);
         console.log(dailyCounts);
 

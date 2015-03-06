@@ -15,39 +15,51 @@ journey.lastfm = (function() {
 
         var allData = [];
 
-        // a recursive helper function to get all pages of data
-        function recentTracks (currentPage, totalPages) {
-            if(currentPage === totalPages) {
-                console.log(allData);
+        function recentTracks(totalPages) {
+            var promises = [];
+
+            for(var i = 1; i <= totalPages; i ++) {
+                var promise = $.ajax({
+                    url: lastfmBase + '?method=user.getrecenttracks&user=' + username + '&api_key=' + lastfmKey + '&limit=200&format=json&from=' + fromParam + '&to=' + toParam + '&page=' + i,
+                    success: function(data) {
+                        if (data.error) {
+                            console.log('ERROR [data.getLastfmTracks]:' + data.message);
+                        }
+                        else {
+                            var current = parseInt(data.recenttracks['@attr'].page);
+                            console.log('Done page: ' + current);
+                            allData = allData.concat(data.recenttracks.track);
+                        }
+                    }
+                });
+
+                promises.push(promise);
+            }
+
+            $.when.apply(null, promises).done(function(){
+                console.log('all data done!!');
+                
                 if(callback) {
                     callback(allData);
                 }
                 return;
-            }
-
-            currentPage ++;
-
-            $.ajax({
-                url: lastfmBase + '?method=user.getrecenttracks&user=' + username + '&api_key=' + lastfmKey + '&limit=200&format=json&from=' + fromParam + '&to=' + toParam + '&page=' + currentPage,
-                success: function(data) {
-                    if (data.error) {
-                        console.log('ERROR [data.getLastfmTracks]:' + data.message);
-                    }
-                    else {
-                        var total = parseInt(data.recenttracks['@attr'].totalPages);
-                        var current = parseInt(data.recenttracks['@attr'].page);
-                        console.log('Current Page: ' + current);
-                        console.log('Total Page: ' + total);
-                        allData = allData.concat(data.recenttracks.track);
-                        recentTracks(current, total);
-                    }
-                }
             });
-
         }
 
-        // trigger the recursive function to get data
-        recentTracks(0, null);
+        $.ajax({
+            url: lastfmBase + '?method=user.getrecenttracks&user=' + username + '&api_key=' + lastfmKey + '&limit=200&format=json&from=' + fromParam + '&to=' + toParam,
+            success: function(data) {
+                if (data.error) {
+                    console.log('ERROR [data.getLastfmTracks]:' + data.message);
+                }
+                else {
+                    var total = parseInt(data.recenttracks['@attr'].totalPages);
+                    console.log('Total Page: ' + total);
+                    allData = allData.concat(data.recenttracks.track);
+                    recentTracks(total);
+                }
+            }
+        });
     };
 
     var getLastfmArtistTracks = function(username, artist, callback) {
