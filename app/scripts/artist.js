@@ -71,10 +71,15 @@ journey.artist = (function() {
         console.log(artistInfo);
     };
 
+    var clearAllStats = function() {
+        artistInfo = [];
+    };
+
     return {
         computeArtistStats: computeArtistStats,
         getArtistInfo: getArtistInfo,
-        printAllStats: printAllStats
+        printAllStats: printAllStats,
+        clearAllStats: clearAllStats
     };
 })();
 

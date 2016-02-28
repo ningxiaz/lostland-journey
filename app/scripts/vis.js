@@ -143,12 +143,16 @@ journey.vis = (function() {
 
     var updateDailyBubbles = function(start, end) {
         $('.overlay').show();
+        $('.artistCard').hide();
         journey.lastfm.getLastfmTracks(journey.username, start, end, function(data) {
             var dailyCounts = journey.data.computeDateArtistCounts(data);
 
             var normalizedCounts = journey.data.normalizeAndSort(dailyCounts);
             console.log('normalizedCounts');
             console.log(normalizedCounts);
+
+            journey.artist.clearAllStats();
+            journey.artist.computeArtistStats(data);
 
             $('.overlay').hide();
 
@@ -200,10 +204,6 @@ journey.vis = (function() {
                 'class': 'artistCard-trackCount'
             }).text(track.count).appendTo(trackDiv);
         });
-    };
-
-    var hideArtistCard = function() {
-
     };
 
     // var trendBubbles = function(counts, visWidth) {
@@ -364,7 +364,6 @@ journey.vis = (function() {
         dailyBubbles: dailyBubbles,
         updateDailyBubbles: updateDailyBubbles,
         showArtistCard: showArtistCard,
-        hideArtistCard: hideArtistCard,
         // trendBubbles: trendBubbles,
         // lineDetails: lineDetails
     };
