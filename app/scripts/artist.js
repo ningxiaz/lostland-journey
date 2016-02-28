@@ -10,8 +10,12 @@ journey.artist = (function() {
             if(!artistInfo.hasOwnProperty(artistName)) {
                 artistInfo[artistName] = {
                     'albums': [],
-                    'topTracks': []
+                    'topTracks': [],
+                    'total': 1
                 };
+            }
+            else {
+                artistInfo[artistName].total ++;
             }
 
             var albumExists = false;

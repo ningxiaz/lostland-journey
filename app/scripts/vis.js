@@ -131,8 +131,6 @@ journey.vis = (function() {
                     d3.selectAll('.bubble')
                         .transition()
                         .style('fill', function(d) {return color(d.artist)});
-
-                    _this.hideArtistCard();
                 })
                 .on('click', function(d) {
                     var artistName = d.artist;
@@ -204,6 +202,8 @@ journey.vis = (function() {
                 'class': 'artistCard-trackCount'
             }).text(track.count).appendTo(trackDiv);
         });
+
+        $('.artistCard-total span').text(artistInfo.total);
     };
 
     // var trendBubbles = function(counts, visWidth) {
