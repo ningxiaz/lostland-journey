@@ -9,6 +9,8 @@ $height--track: 40px;
     min-height: 200px;
     color: white;
     padding: 0 2*$baseline;
+    font-size: 14px;
+    margin-bottom: 4*$baseline;
 }
 
 .artistCard-section {
@@ -19,13 +21,14 @@ $height--track: 40px;
     border-left: 1px #555 solid;
 }
 
-.artistCard-name {
-}
-
 .artistCard-album {
+    padding: 8px 0;
+    border-bottom: 1px #333 solid;
+
     img {
-        width: 60px;
+        width: $height--album;
         float: left;
+        margin-right: 6px;
     }
 }
 
@@ -33,22 +36,38 @@ $height--track: 40px;
     display: inline-block;
     line-height: $height--album;
     float: left;
+    width: calc(85% - 58px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.artistCard-track {
+  border-bottom: 1px #333 solid;
 }
 
 .artistCard-albumCount {
     display: inline-block;
     line-height: $height--album;
     float: right;
+    width: 15%;
+    text-align: right;
 }
 
 .artistCard-trackName {
     display: inline-block;
     line-height: $height--track;
     float: left;
+    width: 85%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .artistCard-trackCount {
     display: inline-block;
     line-height: $height--track;
     float: right;
+    width: 15%;
+    text-align: right;
 }
