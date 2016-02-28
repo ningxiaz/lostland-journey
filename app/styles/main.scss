@@ -1,14 +1,13 @@
 // bower:scss
 // endbower
 
-
-
 $baseline: 1rem;
 
 body {
     background: #333;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
+    margin: 0;
 }
 
 .overlay {
@@ -30,6 +29,17 @@ body {
 }
 
 .timelineVis {
+}
+
+.artistCard {
+    display: none;
+    width: 100%;
+    min-height: 400px;
+    color: white;
+}
+
+.artistCard-name {
+    padding: $baseline 32px;
 }
 
 @import "form.scss";

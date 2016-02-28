@@ -10,10 +10,10 @@ journey.timeline = (function() {
 
         var data = [{x: start, y: 0.5}, {x: end, y: 0.5}];
 
-        var maxR = 40;
-        var margin = {top: maxR/2, left: maxR, right: maxR, bottom: maxR/2};
+        var maxR = 32;
+        var margin = {top: 0, left: maxR, right: maxR, bottom: 0};
         var width = visWidth - margin.left - margin.right;
-        var height = 80 - margin.top - margin.bottom;
+        var height = 60 - margin.top - margin.bottom;
 
         var x = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);

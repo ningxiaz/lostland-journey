@@ -5,6 +5,8 @@ journey.vis = (function() {
     var svg;
 
     var dailyBubbles = function(counts, visWidth) {
+        var _this = this;
+
         var timeParse = d3.time.format('%Y-%m-%d').parse;
 
         var linesData = [];
@@ -13,10 +15,10 @@ journey.vis = (function() {
             d.date = timeParse(d.date);
         });
 
-        var maxR = 40;
+        var maxR = 32;
         var margin = {top: 0, left: maxR, right: maxR, bottom: 0};
         var width = visWidth - margin.left - margin.right;
-        var height = 280 - margin.top - margin.bottom;
+        var height = 300 - margin.top - margin.bottom;
 
         var color =  d3.scale.category20();
 
@@ -116,6 +118,8 @@ journey.vis = (function() {
                 .style('opacity', 0.7)
                 .on('mouseover', function(d) {
                     var artistName = d.artist;
+
+                    _this.prepareAndShowArtistCard(artistName);
                     console.log('inspecting... ' + artistName);
 
                     d3.selectAll('.bubble')
@@ -129,6 +133,8 @@ journey.vis = (function() {
                     d3.selectAll('.bubble')
                         .transition()
                         .style('fill', function(d) {return color(d.artist)});
+
+                    // $('.artistCard').hide();
                 });
     };
 
@@ -148,6 +154,11 @@ journey.vis = (function() {
             $('.musicVis').empty();
             journey.vis.dailyBubbles(normalizedCounts, visWidth);
         });
+    };
+
+    var prepareAndShowArtistCard = function(artistName) {
+        $('.artistCard').show();
+        $('.artistCard-name').text(artistName);
     };
 
     var trendBubbles = function(counts, visWidth) {
@@ -305,6 +316,7 @@ journey.vis = (function() {
     };
 
     return {
+        prepareAndShowArtistCard: prepareAndShowArtistCard,
         dailyBubbles: dailyBubbles,
         trendBubbles: trendBubbles,
         updateDailyBubbles: updateDailyBubbles,
