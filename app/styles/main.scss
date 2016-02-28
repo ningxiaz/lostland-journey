@@ -4,7 +4,7 @@
 $baseline: 1rem;
 
 body {
-    background: #333;
+    background: #222;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
     margin: 0;
@@ -37,21 +37,5 @@ body {
 .timelineVis {
 }
 
-.artistCard {
-    display: none;
-    width: 100%;
-    min-height: 200px;
-    color: white;
-}
-
-.artistCard-section {
-    width: 33%;
-    display: inline-block;
-    float: left;
-}
-
-.artistCard-name {
-    padding: $baseline 32px;
-}
-
 @import "form.scss";
+@import "artistCard.scss";

@@ -1,0 +1,54 @@
+// artist card styles
+
+$height--album: 50px;
+$height--track: 40px;
+
+.artistCard {
+    display: none;
+    width: calc(100% - 4rem);
+    min-height: 200px;
+    color: white;
+    padding: 0 2*$baseline;
+}
+
+.artistCard-section {
+    width: calc(33% - 4rem);
+    display: inline-block;
+    float: left;
+    padding: 0 2*$baseline;
+    border-left: 1px #555 solid;
+}
+
+.artistCard-name {
+}
+
+.artistCard-album {
+    img {
+        width: 60px;
+        float: left;
+    }
+}
+
+.artistCard-albumName {
+    display: inline-block;
+    line-height: $height--album;
+    float: left;
+}
+
+.artistCard-albumCount {
+    display: inline-block;
+    line-height: $height--album;
+    float: right;
+}
+
+.artistCard-trackName {
+    display: inline-block;
+    line-height: $height--track;
+    float: left;
+}
+
+.artistCard-trackCount {
+    display: inline-block;
+    line-height: $height--track;
+    float: right;
+}

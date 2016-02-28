@@ -171,7 +171,7 @@ journey.vis = (function() {
 
         artistInfo.albums.forEach(function(album) {
             var albumDiv = $('<div/>', {
-                'class': 'artistCard-album'
+                'class': 'artistCard-album clearfix'
             }).appendTo('.artistCard-albums');
 
             $('<img>', {
@@ -189,7 +189,7 @@ journey.vis = (function() {
 
         artistInfo.topTracks.slice(0, 10).forEach(function(track){
             var trackDiv = $('<div/>', {
-                'class': 'artistCard-track'
+                'class': 'artistCard-track clearfix'
             }).appendTo('.artistCard-tracks');
 
             $('<div/>', {
