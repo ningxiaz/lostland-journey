@@ -34,7 +34,11 @@ body {
     margin-top: 35vh;
 }
 
-.timelineVis {
+.timeTitle {
+    display: none;
+    padding: 0 2*$baseline;
+    font-weight: 300;
+    color: #ddd;
 }
 
 @import "form.scss";

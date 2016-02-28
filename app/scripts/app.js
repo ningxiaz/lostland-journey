@@ -35,5 +35,8 @@ $('.start-done').click(function() {
 
         var visWidth = $(window).width();
         journey.vis.dailyBubbles(normalizedCounts, visWidth);
+
+        $('.timeTitle').show();
+        journey.timeline.updateTimeTitle(oneMonthAgo, now);
     });
 });

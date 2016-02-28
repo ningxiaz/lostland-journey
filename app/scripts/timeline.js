@@ -38,6 +38,7 @@ journey.timeline = (function() {
 
         var brush = d3.svg.brush()
                     .x(x)
+                    .on('brush', brushing)
                     .on('brushend', brushed);
 
         // set the current extent
@@ -67,10 +68,21 @@ journey.timeline = (function() {
             console.log(brush.extent());
             var selectedExtent = brush.extent();
             journey.vis.updateDailyBubbles(selectedExtent[0], selectedExtent[1]);
+            updateTimeTitle(selectedExtent[0], selectedExtent[1]);
+        }
+
+        function brushing() {
+            var selectedExtent = brush.extent();
+            updateTimeTitle(selectedExtent[0], selectedExtent[1]);
         }
     };
 
+    var updateTimeTitle = function(start, end) {
+        $('.timeTitle span').text(start.toDateString() + ' - ' + end.toDateString());
+    };
+
     return {
-        draw: draw
+        draw: draw,
+        updateTimeTitle: updateTimeTitle
     };
 })();
