@@ -10,6 +10,12 @@ body {
     margin: 0;
 }
 
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .overlay {
     background-color: rgba(80, 80, 80, 0.8);
     position: fixed;
@@ -34,8 +40,14 @@ body {
 .artistCard {
     display: none;
     width: 100%;
-    min-height: 400px;
+    min-height: 200px;
     color: white;
+}
+
+.artistCard-section {
+    width: 33%;
+    display: inline-block;
+    float: left;
 }
 
 .artistCard-name {

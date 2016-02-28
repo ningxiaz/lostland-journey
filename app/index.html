@@ -46,8 +46,18 @@
     <div class="musicVis">
     </div>
 
-    <div class="artistCard">
-      <h2 class="artistCard-name">Artist name</h2>
+    <div class="artistCard clearfix">
+      <div class="artistCard-section">
+        <h1 class="artistCard-name">Artist name</h1>
+      </div>
+      <div class="artistCard-section">
+        <h3>Albums</h3>
+        <div class="artistCard-albums"></div>
+      </div>
+      <div class="artistCard-section">
+        <h3>Top Tracks</h3>
+        <div class="artistCard-tracks"></div>
+      </div>
     </div>
 
     <!-- build:js(.) scripts/vendor.js -->
@@ -71,6 +81,7 @@
         <script src="scripts/main.js"></script>
         <script src="scripts/lastfm.js"></script>
         <script src="scripts/data.js"></script>
+        <script src="scripts/artist.js"></script>
         <script src="scripts/vis.js"></script>
         <script src="scripts/timeline.js"></script>
         <script src="scripts/app.js"></script>
