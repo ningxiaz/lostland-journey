@@ -187,7 +187,7 @@ journey.vis = (function() {
             }).text(album.count).appendTo(albumDiv);
         });
 
-        artistInfo.topTracks.forEach(function(track){
+        artistInfo.topTracks.slice(0, 10).forEach(function(track){
             var trackDiv = $('<div/>', {
                 'class': 'artistCard-track'
             }).appendTo('.artistCard-tracks');

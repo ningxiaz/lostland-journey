@@ -46,6 +46,17 @@ journey.artist = (function() {
                 });
             }
         });
+
+        // sort the tracks
+        for (var artistName in artistInfo) {
+            if(artistInfo.hasOwnProperty(artistName)) {
+                artistInfo[artistName].topTracks.sort(function(a, b) {
+                    if(a.count > b.count) return -1;
+                    if(a.count < b.count) return 1;
+                    return 0;
+                });
+            }
+        }
     };
 
     var getArtistInfo = function(artistName) {
