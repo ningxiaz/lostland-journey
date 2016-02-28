@@ -14,9 +14,9 @@ journey.vis = (function() {
         });
 
         var maxR = 40;
-        var margin = {top: maxR/2, left: maxR, right: maxR, bottom: maxR};
+        var margin = {top: 0, left: maxR, right: maxR, bottom: 0};
         var width = visWidth - margin.left - margin.right;
-        var height = 400 - margin.top - margin.bottom;
+        var height = 280 - margin.top - margin.bottom;
 
         var color =  d3.scale.category20();
 
@@ -75,7 +75,7 @@ journey.vis = (function() {
         });
 
         y.domain([-1, 1]);
-        
+
 
         // method to draw horizontal lines
         var line = d3.svg.line()
@@ -175,7 +175,7 @@ journey.vis = (function() {
         var svg = d3.select('.musicVis').append('svg')
                     .attr('width', visWidth)
                     .attr('height', 400 + margin.top + margin.bottom)
-                .append('g');        
+                .append('g');
 
         x.domain(d3.extent(counts, function(d) { return d.date; }));
         y.domain([0, 1]);
@@ -262,7 +262,7 @@ journey.vis = (function() {
         var svg = d3.select('.musicVis').append('svg')
                     .attr('width', visWidth)
                     .attr('height', lineHeight*numArtists)
-                .append('g');        
+                .append('g');
 
         x.domain(d3.extent(counts, function(d) { return d.date; }));
         y.domain([0, numArtists]);
