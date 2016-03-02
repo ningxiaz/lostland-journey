@@ -2,6 +2,11 @@
 // manipulating data obtained from API
 
 journey.data = (function() {
+    var aggregateData = {
+        totalPlays: 0,
+        averagePlays: 0
+    };
+
     var computeArtistDailyCounts = function(tracks) {
         var counts = {};
         tracks.forEach(function(track) {
@@ -37,8 +42,12 @@ journey.data = (function() {
                     counts[dateString][artistName] = 0;
                 }
                 counts[dateString][artistName] += 1;
+                aggregateData.totalPlays += 1;
             }
         });
+
+        aggregateData.averagePlays = aggregateData.totalPlays / (Object.keys(counts).length);
+        console.log(aggregateData);
 
         return counts;
     };
@@ -159,7 +168,7 @@ journey.data = (function() {
                             });
                         }
                     }
-                }                
+                }
             }
         }
 

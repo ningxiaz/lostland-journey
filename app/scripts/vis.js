@@ -141,7 +141,7 @@ journey.vis = (function() {
 
     var updateDailyBubbles = function(start, end) {
         $('.overlay').show();
-        $('.artistCard').hide();
+        $('.artistInfo').hide();
         journey.lastfm.getLastfmTracks(journey.username, start, end, function(data) {
             var dailyCounts = journey.data.computeDateArtistCounts(data);
 
@@ -163,47 +163,47 @@ journey.vis = (function() {
 
     var showArtistCard = function(artistName) {
         // clear previous appends
-        $('.artistCard-albums').empty();
-        $('.artistCard-tracks').empty();
+        $('.artistInfo-albums').empty();
+        $('.artistInfo-tracks').empty();
 
-        $('.artistCard').show();
-        $('.artistCard-name').text(artistName);
+        $('.artistInfo').show();
+        $('.artistInfo-artistName').text(artistName);
         var artistInfo = journey.artist.getArtistInfo(artistName);
         if(artistInfo === null) return;
 
         artistInfo.albums.forEach(function(album) {
             var albumDiv = $('<div/>', {
-                'class': 'artistCard-album clearfix'
-            }).appendTo('.artistCard-albums');
+                'class': 'info-album clearfix'
+            }).appendTo('.artistInfo-albums');
 
             $('<img>', {
                 'src': album.image
             }).appendTo(albumDiv);
 
             $('<div/>', {
-                'class': 'artistCard-albumName'
+                'class': 'info-albumName'
             }).text(album.name).appendTo(albumDiv);
 
             $('<div/>', {
-                'class': 'artistCard-albumCount'
+                'class': 'info-albumCount'
             }).text(album.count).appendTo(albumDiv);
         });
 
         artistInfo.topTracks.slice(0, 10).forEach(function(track){
             var trackDiv = $('<div/>', {
-                'class': 'artistCard-track clearfix'
-            }).appendTo('.artistCard-tracks');
+                'class': 'info-track clearfix'
+            }).appendTo('.artistInfo-tracks');
 
             $('<div/>', {
-                'class': 'artistCard-trackName'
+                'class': 'info-trackName'
             }).text(track.name).appendTo(trackDiv);
 
             $('<div/>', {
-                'class': 'artistCard-trackCount'
+                'class': 'info-trackCount'
             }).text(track.count).appendTo(trackDiv);
         });
 
-        $('.artistCard-total span').text(artistInfo.total);
+        $('.artistInfo-total span').text(artistInfo.total);
     };
 
     // var trendBubbles = function(counts, visWidth) {
