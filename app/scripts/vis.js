@@ -118,7 +118,6 @@ journey.vis = (function() {
                 .style('opacity', 0.7)
                 .on('mouseover', function(d) {
                     var artistName = d.artist;
-                    console.log('inspecting... ' + artistName);
 
                     d3.selectAll('.bubble')
                         .filter(function(d) {
@@ -137,6 +136,7 @@ journey.vis = (function() {
 
                     _this.showArtistCard(artistName);
                 });
+
     };
 
     var updateDailyBubbles = function(start, end) {
@@ -152,6 +152,9 @@ journey.vis = (function() {
             journey.artist.clearAllStats();
             journey.artist.computeArtistStats(data);
 
+            journey.aggregate.prepareAggregateStats();
+            journey.aggregate.updateAggregateStats();
+
             $('.overlay').hide();
 
             var visWidth = $(window).width();
@@ -166,6 +169,7 @@ journey.vis = (function() {
         $('.artistInfo-albums').empty();
         $('.artistInfo-tracks').empty();
 
+        $('.aggregateInfo').hide();
         $('.artistInfo').show();
         $('.artistInfo-artistName').text(artistName);
         var artistInfo = journey.artist.getArtistInfo(artistName);

@@ -41,5 +41,10 @@ $('.start-done').click(function() {
 
         $('.timeTitle').show();
         journey.timeline.updateTimeTitle(oneMonthAgo, now);
+
+        $('.artistInfo-back').click(function() {
+            $('.artistInfo').hide();
+            $('.aggregateInfo').show();
+        });
     });
 });
