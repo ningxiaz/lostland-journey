@@ -5,10 +5,93 @@
 }
 
 .start {
-    width: 25rem;
-    padding: 2*$baseline;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40vh;
-    background-color: #555;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../images/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
+
+.start-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: -1;
+}
+
+.start-container {
+    width: 500px;
+    margin: 0 auto;
+    padding: $baseline;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.start h1 {
+  font-size: 48px;
+  font-weight: 100;
+  letter-spacing: 0.06em;
+}
+
+.start label {
+  font-size: 16px;
+  font-weight: 300;
+  color: #ddd;
+}
+
+.start-lastfm {
+  border: none;
+  border-bottom: 1px #777 solid;
+  background: transparent;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
+  font-size: 24px;
+  width: 60%;
+  transition: border-bottom-color .2s linear;
+
+  &:focus {
+    outline: 0;
+    border-bottom-color: white;
+  }
+}
+
+.start-help {
+  font-size: 14px;
+  font-weight: 300;
+  color: #999;
+}
+
+.start-done {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 8px 16px;
+  font-size: 16px;
+  border: 1px #ddd solid;
+  background: transparent;
+  color: #ddd;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background .2s linear;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  &:active {
+    outline: 0;
+  }
+}
+
