@@ -24,6 +24,7 @@ journey.lastfm = (function() {
                     success: function(data) {
                         if (data.error) {
                             console.log('ERROR [data.getLastfmTracks]:' + data.message);
+                            handleError();
                         }
                         else {
                             var current = parseInt(data.recenttracks['@attr'].page);
@@ -38,7 +39,7 @@ journey.lastfm = (function() {
 
             $.when.apply(null, promises).done(function(){
                 console.log('all data done!!');
-                
+
                 if(callback) {
                     callback(allData);
                 }
@@ -51,6 +52,7 @@ journey.lastfm = (function() {
             success: function(data) {
                 if (data.error) {
                     console.log('ERROR [data.getLastfmTracks]:' + data.message);
+                    handleError();
                 }
                 else {
                     var total = parseInt(data.recenttracks['@attr'].totalPages);
@@ -70,6 +72,7 @@ journey.lastfm = (function() {
             success: function(data) {
                 if (data.error) {
                     console.log('ERROR [data.getLastfmArtistTracks]:' + data.message);
+                    handleError();
                 }
                 else {
                     console.log(data);
@@ -89,6 +92,7 @@ journey.lastfm = (function() {
             success: function(data) {
                 if (data.error) {
                     console.log('ERROR [data.getLastfmUserInfo]:' + data.message);
+                    handleError();
                 }
                 else {
                     console.log(data);
@@ -100,10 +104,16 @@ journey.lastfm = (function() {
         });
     };
 
+    var handleError = function() {
+        $('.overlay').hide();
+        $('.error').show();
+    };
+
     return {
         getLastfmTracks: getLastfmTracks,
         getLastfmArtistTracks: getLastfmArtistTracks,
-        getLastfmUserInfo: getLastfmUserInfo
+        getLastfmUserInfo: getLastfmUserInfo,
+        handleError: handleError
     };
 })();
 

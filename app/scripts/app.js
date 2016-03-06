@@ -1,10 +1,16 @@
 // starting point of the app
 
 $('.start-done').click(function() {
-    $('.start').hide();
-    $('.overlay').show();
 
     journey.username = $('.start-lastfm').val();
+    if(journey.username === undefined || journey.username === '') {
+        $('.start-error').show();
+        $('.start-error').text('Sorry, I see nothing here');
+        return;
+    }
+
+    $('.start').hide();
+    $('.overlay').show();
 
     var now = new Date();
     var oneMonthAgo = new Date();
@@ -13,6 +19,7 @@ $('.start-done').click(function() {
     var registeredTime;
 
     journey.lastfm.getLastfmUserInfo(journey.username, function(data) {
+        console.log(data);
         registeredTime = new Date(parseInt(data.user.registered.unixtime) * 1000);
 
         var visWidth = $(window).width();

@@ -4,7 +4,7 @@
     margin: $baseline 0;
 }
 
-.start {
+.start, .error {
     position: fixed;
     left: 0;
     top: 0;
@@ -19,7 +19,11 @@
     background-size: cover;
 }
 
-.start-overlay {
+.error {
+  display: none;
+}
+
+.start-overlay, .error-overlay {
     position: absolute;
     left: 0;
     top: 0;
@@ -29,7 +33,7 @@
     z-index: -1;
 }
 
-.start-container {
+.start-container, .error-container {
     width: 500px;
     margin: 0 auto;
     padding: $baseline;
@@ -39,7 +43,7 @@
     transform: translateY(-50%);
 }
 
-.start h1 {
+.start h1, .error h1 {
   font-size: 48px;
   font-weight: 100;
   letter-spacing: 0.06em;
@@ -90,8 +94,15 @@
     background: rgba(255, 255, 255, 0.3);
   }
 
-  &:active {
+  &:active, &:focus {
     outline: 0;
   }
+}
+
+.start-error {
+  font-weight: 300;
+  font-size: 14px;
+  color: red;
+  display: none;
 }
 
