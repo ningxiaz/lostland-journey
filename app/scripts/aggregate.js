@@ -68,7 +68,7 @@ journey.aggregate = (function() {
 
         topTracks.forEach(function(track){
             var trackDiv = $('<div/>', {
-                'class': 'info-track clearfix'
+                'class': 'info-track info-track--withArtist clearfix'
             }).appendTo('.aggregateInfo-tracks');
 
             $('<div/>', {
@@ -78,6 +78,10 @@ journey.aggregate = (function() {
             $('<div/>', {
                 'class': 'info-trackCount'
             }).text(track.count).appendTo(trackDiv);
+
+            $('<div/>', {
+                'class': 'info-artistName'
+            }).text(track.artist).appendTo(trackDiv);
         });
 
         $('.aggregateInfo').show();

@@ -47,8 +47,8 @@ $height--track: 40px;
     text-overflow: ellipsis;
 }
 
-.info-track {
-  border-bottom: 1px #333 solid;
+.info-track, .info-artist {
+    border-bottom: 1px #333 solid;
 }
 
 .info-albumCount {
@@ -57,9 +57,10 @@ $height--track: 40px;
     float: right;
     width: 15%;
     text-align: right;
+    color: #999;
 }
 
-.info-trackName {
+.info-trackName, .info-artistName {
     display: inline-block;
     line-height: $height--track;
     float: left;
@@ -69,10 +70,34 @@ $height--track: 40px;
     text-overflow: ellipsis;
 }
 
-.info-trackCount {
+.info-trackCount, .info-artistTotal {
     display: inline-block;
     line-height: $height--track;
     float: right;
     width: 15%;
     text-align: right;
+    color: #999;
 }
+
+.info-track--withArtist {
+  padding: 9px 0;
+}
+
+.info-track--withArtist .info-trackName {
+    line-height: 22px;
+}
+
+.info-track--withArtist .info-artistName {
+    line-height: 18px;
+    font-size: 12px;
+    color: #777;
+}
+
+.info-track--withArtist .info-trackCount {
+    line-height: 22px;
+}
+
+.aggregateInfo-total {
+    color: white;
+}
+
