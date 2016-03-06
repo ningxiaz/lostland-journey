@@ -38,7 +38,22 @@ body {
     display: none;
     padding: 0 2*$baseline;
     font-weight: 300;
-    color: #ddd;
+    color: #999;
+
+    span {
+        color: white;
+    }
+}
+
+// timeline
+.timeline path, .timeline line {
+    fill: none;
+    stroke: white;
+    shape-rendering: crispEdges;
+}
+
+.timeline text {
+    font-size: 11px;
 }
 
 @import "form.scss";

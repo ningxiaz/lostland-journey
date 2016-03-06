@@ -11,9 +11,9 @@ journey.timeline = (function() {
         var data = [{x: start, y: 0.5}, {x: end, y: 0.5}];
 
         var maxR = 32;
-        var margin = {top: 0, left: maxR, right: maxR, bottom: 0};
+        var margin = {top: 12, left: maxR, right: maxR, bottom: 0};
         var width = visWidth - margin.left - margin.right;
-        var height = 60 - margin.top - margin.bottom;
+        var height = 50 - margin.top - margin.bottom;
 
         var x = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
@@ -25,16 +25,9 @@ journey.timeline = (function() {
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         x.domain([start, end]);
-        y.domain([0, 1]);
+        var xAxis = d3.svg.axis().scale(x).orient('bottom').tickSize(0);
 
-        var line = d3.svg.line()
-                    .x(function(d) {
-                        return x(d.x);
-                    })
-                    .y(function(d) {
-                        return y(d.y);
-                    })
-                    .interpolate("linear");
+        y.domain([0, 1]);
 
         var brush = d3.svg.brush()
                     .x(x)
@@ -44,15 +37,11 @@ journey.timeline = (function() {
         // set the current extent
         brush.extent([extentLeft, extentRight]);
 
-        svg.selectAll('.timeline')
-            .data([data])   // single svg element
-            .enter()
-            .append('svg:g')
-            .append('path')
+        svg.append('g')
             .attr('class', 'timeline')
-            .style('stroke', '#555')
-            .style('stroke-width', '1px')
-            .attr('d', line);
+            .call(xAxis)
+            .style('fill', '#ddd')
+            .style('stroke-width', '1px');
 
         svg.append('g')
                 .attr('class', 'brush')
