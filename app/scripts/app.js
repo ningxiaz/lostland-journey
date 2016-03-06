@@ -31,6 +31,9 @@ $('.start-done').click(function() {
         journey.artist.computeArtistStats(data);
         journey.artist.printAllStats();
 
+        journey.aggregate.prepareAggregateStats();
+        journey.aggregate.updateAggregateStats();
+
         $('.overlay').hide();
 
         var visWidth = $(window).width();

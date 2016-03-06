@@ -2,7 +2,8 @@
 // compute and hold artist stats
 
 journey.artist = (function() {
-    var artistInfo = [];
+    var artistInfo = {};
+    var tracksInfo = {};
 
     var computeArtistStats = function(tracks) {
         tracks.forEach(function(track) {
@@ -49,6 +50,20 @@ journey.artist = (function() {
                     'count': 1
                 });
             }
+
+            // save global tracks info too
+            var trackString = track.name + ' - ' + track.album['#text'];
+            if(!tracksInfo.hasOwnProperty(trackString)) {
+                tracksInfo[trackString] = {
+                    'name': track.name,
+                    'album': track.album['#text'],
+                    'artist': track.artist['#text'],
+                    'count': 1
+                };
+            }
+            else {
+                tracksInfo[trackString].count ++;
+            }
         });
 
         // sort the tracks
@@ -71,19 +86,30 @@ journey.artist = (function() {
         return null;
     };
 
+    var getAllArtistInfo = function() {
+        return artistInfo;
+    };
+
+    var getAllTracksInfo = function() {
+        return tracksInfo;
+    };
+
     var printAllStats = function() {
         console.log(artistInfo);
     };
 
     var clearAllStats = function() {
-        artistInfo = [];
+        artistInfo = {};
+        tracksInfo = {};
     };
 
     return {
         computeArtistStats: computeArtistStats,
         getArtistInfo: getArtistInfo,
         printAllStats: printAllStats,
-        clearAllStats: clearAllStats
+        clearAllStats: clearAllStats,
+        getAllArtistInfo: getAllArtistInfo,
+        getAllTracksInfo: getAllTracksInfo
     };
 })();
 

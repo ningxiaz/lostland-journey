@@ -52,6 +52,10 @@ journey.data = (function() {
         return counts;
     };
 
+    var getAggregateData = function() {
+        return aggregateData;
+    };
+
     var computeDailyCounts = function(tracks) {
         var counts = {};
         tracks.forEach(function(track) {
@@ -177,6 +181,7 @@ journey.data = (function() {
 
     return {
         computeDateArtistCounts: computeDateArtistCounts,
+        getAggregateData: getAggregateData,
         normalizeAndSort: normalizeAndSort,
         computeArtistDailyCounts: computeArtistDailyCounts,
         computeDailyCounts: computeDailyCounts,
