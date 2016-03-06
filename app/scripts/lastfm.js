@@ -2,7 +2,7 @@
 // interfacing with Last.fm API: http://www.last.fm/api/intro
 
 journey.lastfm = (function() {
-    var lastfmBase = 'http://ws.audioscrobbler.com/2.0/';
+    var lastfmBase = '//ws.audioscrobbler.com/2.0/';
     var lastfmKey = 'bd286e68d3aa369779ff55dfe15470b6';
 
     // from, to are both Date objects
