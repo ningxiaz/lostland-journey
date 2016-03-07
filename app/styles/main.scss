@@ -17,7 +17,7 @@ body {
 }
 
 .overlay {
-    background-color: rgba(80, 80, 80, 0.8);
+    background-color: rgba(80, 80, 80, 0.6);
     position: fixed;
     width: 100%;
     height: 100%;
@@ -32,6 +32,8 @@ body {
     margin-left: auto;
     margin-right: auto;
     margin-top: 35vh;
+    font-weight: 300;
+    font-size: 18px;
 }
 
 .timeTitle {
@@ -48,12 +50,24 @@ body {
 // timeline
 .timeline path, .timeline line {
     fill: none;
-    stroke: white;
+    stroke: #aaa;
     shape-rendering: crispEdges;
 }
 
 .timeline text {
     font-size: 11px;
+    fill: #aaa;
+}
+
+.vis-axis path, .vis-axis line {
+    fill: none;
+    stroke: #383838;
+    shape-rendering: crispEdges;
+}
+
+.vis-axis text {
+    font-size: 11px;
+    fill: #999;
 }
 
 @import "form.scss";

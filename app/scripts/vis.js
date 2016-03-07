@@ -78,26 +78,13 @@ journey.vis = (function() {
 
         y.domain([-1, 1]);
 
+        // x axis
+        var xAxis = d3.svg.axis().scale(x).orient('bottom').tickSize(height/2 - 20).ticks(6);
 
-        // method to draw horizontal lines
-        var line = d3.svg.line()
-                    .x(function(d, i) {return (i*width)})
-                    .y(function(d) {
-                        return y(d);
-                    })
-                    .interpolate("linear");
-
-        var lineData = [[0, 0]];
-
-        svg.selectAll('.line')
-            .data(lineData)
-            .enter()
-            .append('svg:g')
-            .append('path')
-            .attr('class', 'line')
-            .style('stroke', '#555')
-            .style('stroke-width', '1px')
-            .attr('d', line);
+        svg.append('g')
+            .attr('class', 'vis-axis')
+            .attr('transform', 'translate(0, ' + height/2 + ')')
+            .call(xAxis);
 
         var bubbles = svg.selectAll('.date')
                 .data(counts)
